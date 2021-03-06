@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -83,6 +80,7 @@ public class NewEditController {
                 break;
             case "btnEdit" : initEditWindow("Edit Task");
                 break;
+            default:break;
         }
     }
 
@@ -104,6 +102,7 @@ public class NewEditController {
     }
 
     private void initEditWindow(String title){
+        try{
         currentStage.setTitle(title);
         fieldTitle.setText(currentTask.getTitle());
         datePickerStart.setValue(dateService.getLocalDateValueFromDate(currentTask.getStartTime()));
@@ -119,6 +118,12 @@ public class NewEditController {
         if (currentTask.isActive()){
             checkBoxActive.setSelected(true);
 
+        }}
+        catch (Exception e){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText("Nu ati selectat niciun task");
+            errorAlert.showAndWait();
         }
     }
     @FXML
@@ -144,6 +149,7 @@ public class NewEditController {
     @FXML
     public void saveChanges(){
         Task collectedFieldsTask = collectFieldsData();
+
         if (incorrectInputMade) return;
 
         if (currentTask == null){//no task was chosen -> add button was pressed
@@ -165,7 +171,7 @@ public class NewEditController {
         Controller.editNewStage.close();
     }
 
-    private Task collectFieldsData(){
+    private Task collectFieldsData()  {
         incorrectInputMade = false;
         Task result = null;
         try {
@@ -189,7 +195,7 @@ public class NewEditController {
     }
 
 
-    private Task makeTask(){
+    private Task makeTask()  {
         Task result;
         String newTitle = fieldTitle.getText();
         Date startDateWithNoTime = dateService.getDateValueFromLocalDate(datePickerStart.getValue());//ONLY date!!without time

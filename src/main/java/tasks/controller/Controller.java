@@ -90,7 +90,7 @@ public class Controller {
             editNewStage = new Stage();
             NewEditController.setCurrentStage(editNewStage);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/new-edit-task.fxml"));
-            Parent root = loader.load();//getClass().getResource("/fxml/new-edit-task.fxml"));
+            Parent root = loader.load();
             NewEditController editCtrl = loader.getController();
             editCtrl.setService(service);
             editCtrl.setTasksList(tasksList);
@@ -99,7 +99,10 @@ public class Controller {
             editNewStage.setResizable(false);
             editNewStage.initOwner(Main.primaryStage);
             editNewStage.initModality(Modality.APPLICATION_MODAL);//??????
-            editNewStage.show();
+            System.out.println(((Button) source).getText());
+            if((Task)mainTable.getSelectionModel().getSelectedItem()!=null||((Button) source).getText().equals("New")){
+                editNewStage.show();
+            }
         }
         catch (IOException e){
             log.error("Error loading new-edit-task.fxml");
@@ -107,9 +110,17 @@ public class Controller {
     }
     @FXML
     public void deleteTask(){
+        if((Task)tasks.getSelectionModel().getSelectedItem()==null){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText("Nu ati selectat niciun task pentru a fi sters");
+            errorAlert.showAndWait();
+        }
+        else{
+
         Task toDelete = (Task)tasks.getSelectionModel().getSelectedItem();
         tasksList.remove(toDelete);
-        TaskIO.rewriteFile(tasksList);
+        TaskIO.rewriteFile(tasksList);}
     }
     @FXML
     public void showDetailedInfo(){
@@ -125,23 +136,37 @@ public class Controller {
             stage.show();
         }
         catch (IOException e){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText("Nu ati selectat niciun task");
+            errorAlert.showAndWait();
             log.error("error loading task-info.fxml");
         }
     }
     @FXML
-    public void showFilteredTasks(){
-        Date start = getDateFromFilterField(datePickerFrom.getValue(), fieldTimeFrom.getText());
-        Date end = getDateFromFilterField(datePickerTo.getValue(), fieldTimeTo.getText());
+    public void showFilteredTasks() {
+        try {
+            Date start = getDateFromFilterField(datePickerFrom.getValue(), fieldTimeFrom.getText());
+            Date end = getDateFromFilterField(datePickerTo.getValue(), fieldTimeTo.getText());
 
-        Iterable<Task> filtered =  service.filterTasks(start, end);
+            Iterable<Task> filtered = service.filterTasks(start, end);
 
-        ObservableList<Task> observableTasks = FXCollections.observableList((ArrayList)filtered);
-        tasks.setItems(observableTasks);
-        updateCountLabel(observableTasks);
+
+            ObservableList<Task> observableTasks = FXCollections.observableList((ArrayList) filtered);
+            tasks.setItems(observableTasks);
+            updateCountLabel(observableTasks);
+        }catch (Exception e){
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText("Introduceti datele calendaristice si orele!");
+            errorAlert.showAndWait();
+        }
     }
-    private Date getDateFromFilterField(LocalDate localDate, String time){
+    private Date getDateFromFilterField(LocalDate localDate, String time) {
+
         Date date = dateService.getDateValueFromLocalDate(localDate);
         return dateService.getDateMergedWithTime(time, date);
+
     }
     @FXML
     public void resetFilteredTasks(){

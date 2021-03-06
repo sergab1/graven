@@ -49,7 +49,7 @@ public class TasksService {
     public Iterable<Task> filterTasks(Date start, Date end){
         TasksOperations tasksOps = new TasksOperations(getObservableList());
         Iterable<Task> filtered = tasksOps.incoming(start,end);
-        //Iterable<Task> filtered = tasks.incoming(start, end);
+       // Iterable<Task> filtered = tasks.incoming(start, end);
 
         return filtered;
     }

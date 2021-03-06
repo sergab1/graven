@@ -19,6 +19,7 @@ public class TaskIO {
     private static final int secondsInDay = 86400;
     private static final int secondsInHour = 3600;
     private static final int secondsInMin = 60;
+    private static String ioExc="IO exception reading or writing file";
 
     private static final Logger log = Logger.getLogger(TaskIO.class.getName());
     public static void write(TaskList tasks, OutputStream out) throws IOException {
@@ -76,7 +77,7 @@ public class TaskIO {
             write(tasks,fos);
         }
         catch (IOException e){
-            log.error("IO exception reading or writing file");
+            log.error(ioExc);
         }
         finally {
             fos.close();
@@ -90,7 +91,7 @@ public class TaskIO {
             read(tasks, fis);
         }
         catch (IOException e){
-            log.error("IO exception reading or writing file");
+            log.error(ioExc);
         }
         finally {
             fis.close();
@@ -125,7 +126,7 @@ public class TaskIO {
             write(tasks, fileWriter);
         }
         catch (IOException e ){
-            log.error("IO exception reading or writing file");
+            log.error(ioExc);
         }
         finally {
             fileWriter.close();
@@ -297,7 +298,8 @@ public class TaskIO {
             TaskIO.writeBinary(taskList, Main.savedTasksFile);
         }
         catch (IOException e){
-            log.error("IO exception reading or writing file");
+            log.error(ioExc);
+
         }
     }
 }
