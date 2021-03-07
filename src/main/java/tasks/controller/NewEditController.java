@@ -60,9 +60,9 @@ public class NewEditController {
     @FXML
     private CheckBox checkBoxRepeated;
 
-    private static final String DEFAULT_START_TIME = "8:00";
+    private static final String DEFAULT_START_TIME = "08:00";
     private static final String DEFAULT_END_TIME = "10:00";
-    private static final String DEFAULT_INTERVAL_TIME = "0:30";
+    private static final String DEFAULT_INTERVAL_TIME = "00:30";
 
     public void setTasksList(ObservableList<Task> tasksList){
         this.tasksList =tasksList;
