@@ -264,3 +264,173 @@
 2021-03-06 10:37:47 INFO  Main:43 - application start
 2021-03-06 10:37:47 INFO  Controller:75 - Main controller initializing
 2021-03-06 10:37:50 INFO  NewEditController:89 - new/edit window initializing
+2021-03-06 13:15:53 INFO  Main:38 - saved data reading
+2021-03-06 13:15:53 INFO  Main:43 - application start
+2021-03-06 13:15:53 INFO  Controller:75 - Main controller initializing
+2021-03-06 13:15:58 INFO  NewEditController:89 - new/edit window initializing
+2021-03-06 13:18:56 INFO  Main:38 - saved data reading
+2021-03-06 13:18:56 INFO  Main:43 - application start
+2021-03-06 13:18:57 INFO  Controller:75 - Main controller initializing
+2021-03-06 13:52:06 INFO  Main:38 - saved data reading
+2021-03-06 13:52:06 INFO  Main:43 - application start
+2021-03-06 13:52:07 INFO  Controller:75 - Main controller initializing
+2021-03-06 13:58:46 INFO  Main:38 - saved data reading
+2021-03-06 13:58:46 INFO  Main:43 - application start
+2021-03-06 13:58:46 INFO  Controller:75 - Main controller initializing
+2021-03-06 14:04:35 INFO  Main:38 - saved data reading
+2021-03-06 14:04:35 INFO  Main:43 - application start
+2021-03-06 14:04:35 INFO  Controller:75 - Main controller initializing
+2021-03-06 14:04:45 INFO  NewEditController:89 - new/edit window initializing
+2021-03-06 14:05:21 INFO  Main:38 - saved data reading
+2021-03-06 14:05:21 INFO  Main:43 - application start
+2021-03-06 14:05:21 INFO  Controller:75 - Main controller initializing
+2021-03-06 14:19:31 INFO  Main:38 - saved data reading
+2021-03-06 14:19:31 INFO  Main:43 - application start
+2021-03-06 14:19:31 INFO  Controller:75 - Main controller initializing
+2021-03-06 14:19:36 INFO  NewEditController:89 - new/edit window initializing
+2021-03-06 14:19:49 INFO  TaskInfoController:26 - task info window initializing
+2021-03-06 14:19:50 ERROR Controller:143 - error loading task-info.fxml
+2021-03-06 14:20:01 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 08:25:58 INFO  Main:38 - saved data reading
+2021-03-07 08:25:58 INFO  Main:43 - application start
+2021-03-07 08:25:58 INFO  Controller:75 - Main controller initializing
+2021-03-07 08:26:05 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 08:27:24 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:16:03 INFO  Main:38 - saved data reading
+2021-03-07 11:16:03 INFO  Main:43 - application start
+2021-03-07 11:16:03 INFO  Controller:75 - Main controller initializing
+2021-03-07 11:16:38 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:25:28 INFO  Main:38 - saved data reading
+2021-03-07 11:25:28 INFO  Main:43 - application start
+2021-03-07 11:25:29 INFO  Controller:75 - Main controller initializing
+2021-03-07 11:25:32 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:26:23 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:26:40 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:26:50 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:28:24 INFO  Main:38 - saved data reading
+2021-03-07 11:28:24 INFO  Main:43 - application start
+2021-03-07 11:28:24 INFO  Controller:75 - Main controller initializing
+2021-03-07 11:28:26 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:28:30 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:28:47 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:29:00 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:30:59 INFO  Main:38 - saved data reading
+2021-03-07 11:30:59 INFO  Main:43 - application start
+2021-03-07 11:30:59 INFO  Controller:75 - Main controller initializing
+2021-03-07 11:57:08 INFO  Main:38 - saved data reading
+2021-03-07 11:57:08 INFO  Main:43 - application start
+2021-03-07 11:57:09 INFO  Controller:75 - Main controller initializing
+2021-03-07 11:57:11 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:57:15 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:59:46 INFO  Main:38 - saved data reading
+2021-03-07 11:59:46 INFO  Main:43 - application start
+2021-03-07 11:59:47 INFO  Controller:75 - Main controller initializing
+2021-03-07 11:59:50 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 11:59:54 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:00:09 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:01:05 INFO  Main:38 - saved data reading
+2021-03-07 12:01:05 INFO  Main:43 - application start
+2021-03-07 12:01:05 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:01:08 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:01:11 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:02:41 INFO  Main:38 - saved data reading
+2021-03-07 12:02:41 INFO  Main:43 - application start
+2021-03-07 12:02:41 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:02:49 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:03:57 INFO  Main:38 - saved data reading
+2021-03-07 12:03:57 INFO  Main:43 - application start
+2021-03-07 12:03:57 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:04:00 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:05:27 INFO  Main:38 - saved data reading
+2021-03-07 12:05:27 INFO  Main:43 - application start
+2021-03-07 12:05:27 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:05:30 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:06:06 INFO  Main:38 - saved data reading
+2021-03-07 12:06:06 INFO  Main:43 - application start
+2021-03-07 12:06:06 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:06:09 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:08:32 INFO  Main:38 - saved data reading
+2021-03-07 12:08:32 INFO  Main:43 - application start
+2021-03-07 12:08:33 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:08:36 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:09:56 INFO  Main:38 - saved data reading
+2021-03-07 12:09:56 INFO  Main:43 - application start
+2021-03-07 12:09:57 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:10:00 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:12:13 INFO  Main:38 - saved data reading
+2021-03-07 12:12:13 INFO  Main:43 - application start
+2021-03-07 12:12:13 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:12:17 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:12:45 INFO  Main:38 - saved data reading
+2021-03-07 12:12:45 INFO  Main:43 - application start
+2021-03-07 12:12:46 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:12:51 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:13:44 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:17:33 INFO  Main:38 - saved data reading
+2021-03-07 12:17:33 INFO  Main:43 - application start
+2021-03-07 12:17:33 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:17:36 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:18:57 INFO  Main:38 - saved data reading
+2021-03-07 12:18:57 INFO  Main:43 - application start
+2021-03-07 12:18:57 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:19:00 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:20:06 INFO  Main:38 - saved data reading
+2021-03-07 12:20:06 INFO  Main:43 - application start
+2021-03-07 12:20:06 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:20:09 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:20:26 INFO  Main:38 - saved data reading
+2021-03-07 12:20:26 INFO  Main:43 - application start
+2021-03-07 12:20:27 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:20:41 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:21:12 INFO  Main:38 - saved data reading
+2021-03-07 12:21:12 INFO  Main:43 - application start
+2021-03-07 12:21:12 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:21:18 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:21:22 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:25:05 INFO  Main:38 - saved data reading
+2021-03-07 12:25:05 INFO  Main:43 - application start
+2021-03-07 12:25:06 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:25:09 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:25:39 INFO  Main:38 - saved data reading
+2021-03-07 12:25:39 INFO  Main:43 - application start
+2021-03-07 12:25:40 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:25:43 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:27:37 INFO  Main:38 - saved data reading
+2021-03-07 12:27:37 INFO  Main:43 - application start
+2021-03-07 12:27:38 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:27:41 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:27:44 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:28:40 INFO  Main:38 - saved data reading
+2021-03-07 12:28:40 INFO  Main:43 - application start
+2021-03-07 12:28:40 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:28:42 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:28:46 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:29:43 INFO  Main:38 - saved data reading
+2021-03-07 12:29:43 INFO  Main:43 - application start
+2021-03-07 12:29:43 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:29:46 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:30:51 INFO  Main:38 - saved data reading
+2021-03-07 12:30:51 INFO  Main:43 - application start
+2021-03-07 12:30:51 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:30:54 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:31:43 INFO  Main:38 - saved data reading
+2021-03-07 12:31:43 INFO  Main:43 - application start
+2021-03-07 12:31:43 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:31:47 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:31:52 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:33:10 INFO  Main:38 - saved data reading
+2021-03-07 12:33:10 INFO  Main:43 - application start
+2021-03-07 12:33:10 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:33:13 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:33:17 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:35:37 INFO  Main:38 - saved data reading
+2021-03-07 12:35:37 INFO  Main:43 - application start
+2021-03-07 12:35:37 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:35:41 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:35:45 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:42:32 INFO  Main:38 - saved data reading
+2021-03-07 12:42:32 INFO  Main:43 - application start
+2021-03-07 12:42:32 INFO  Controller:75 - Main controller initializing
+2021-03-07 12:42:35 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:43:08 INFO  NewEditController:89 - new/edit window initializing
+2021-03-07 12:44:16 INFO  NewEditController:89 - new/edit window initializing

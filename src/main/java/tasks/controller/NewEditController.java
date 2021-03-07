@@ -177,8 +177,13 @@ public class NewEditController {
         try {
             result = makeTask();
         }
-        catch (RuntimeException e){
+        catch (Exception e){
             incorrectInputMade = true;
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Input not valid");
+            errorAlert.setContentText(e.getMessage());
+            errorAlert.showAndWait();
+            /*
             try {
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/fxml/field-validator.fxml"));
@@ -189,15 +194,26 @@ public class NewEditController {
             }
             catch (IOException ioe){
                 log.error("error loading field-validator.fxml");
-            }
+            }*/
         }
         return result;
     }
 
 
-    private Task makeTask()  {
+    private Task makeTask() throws Exception {
         Task result;
         String newTitle = fieldTitle.getText();
+        if(fieldTitle.getText().equals("")) throw new Exception("introduceti titlul!");
+        if(txtFieldTimeStart.getText().equals("")) throw new Exception("introduceti timpul de start!");
+        if(txtFieldTimeEnd.getText().equals("")&&checkBoxRepeated.isSelected()) throw new Exception("introduceti timpul de final!");
+
+        if(!txtFieldTimeStart.getText().matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul timpului de start nu este corect!");
+        if(!txtFieldTimeEnd.getText().matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeated.isSelected()) throw new Exception("formatul timpului de final nu este corect!");
+
+        if(checkBoxRepeated.isSelected()&&fieldInterval.getText().equals("")) throw new Exception("introduceti intervalul!");
+        if(checkBoxRepeated.isSelected()&&!fieldInterval.getText().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul intervalului nu este corect!");
+
+
         Date startDateWithNoTime = dateService.getDateValueFromLocalDate(datePickerStart.getValue());//ONLY date!!without time
         Date newStartDate = dateService.getDateMergedWithTime(txtFieldTimeStart.getText(), startDateWithNoTime);
         if (checkBoxRepeated.isSelected()){
