@@ -16,12 +16,19 @@ import tasks.services.TaskIO;
 import tasks.services.TasksService;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+
+import static java.util.Calendar.getInstance;
 
 
 public class NewEditController {
 
+    public boolean checkBoxRepeatedIsSelected=false;
+    public boolean checkBoxActiveIsSelected=false;
     private static Button clickedButton;
 
     private static final Logger log = Logger.getLogger(NewEditController.class.getName());
@@ -58,7 +65,7 @@ public class NewEditController {
     @FXML
     private CheckBox checkBoxActive;
     @FXML
-    private CheckBox checkBoxRepeated;
+    public CheckBox checkBoxRepeated;
 
     private static final String DEFAULT_START_TIME = "08:00";
     private static final String DEFAULT_END_TIME = "10:00";
@@ -95,7 +102,7 @@ public class NewEditController {
 //        }
 
     }
-    private void initNewWindow(String title){
+    public void initNewWindow(String title){
         currentStage.setTitle(title);
         datePickerStart.setValue(LocalDate.now());
         txtFieldTimeStart.setText(DEFAULT_START_TIME);
@@ -175,7 +182,14 @@ public class NewEditController {
         incorrectInputMade = false;
         Task result = null;
         try {
-            result = makeTask();
+            String title = fieldTitle.getText();
+            String timeStart=txtFieldTimeStart.getText();
+            String timeEnd=txtFieldTimeEnd.getText();
+            String interval=fieldInterval.getText();
+            LocalDate dateStart=datePickerStart.getValue();
+            LocalDate dateEnd=datePickerStart.getValue();
+
+            result = makeTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
         }
         catch (Exception e){
             incorrectInputMade = true;
@@ -200,37 +214,65 @@ public class NewEditController {
     }
 
 
-    private Task makeTask() throws Exception {
+    public Task makeTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws Exception {
+        if (checkBoxRepeated.isSelected())
+            checkBoxRepeatedIsSelected=true;
+        if(checkBoxActive.isSelected())
+            checkBoxActiveIsSelected=true;
+        Task result=createTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
+        return result;
+    }
+
+    public Task createTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws Exception {
         Task result;
-        String newTitle = fieldTitle.getText();
-        if(fieldTitle.getText().equals("")) throw new Exception("introduceti titlul!");
-        if(txtFieldTimeStart.getText().equals("")) throw new Exception("introduceti timpul de start!");
-        if(txtFieldTimeEnd.getText().equals("")&&checkBoxRepeated.isSelected()) throw new Exception("introduceti timpul de final!");
+        if(title.equals("")) throw new Exception("introduceti titlul!");
+        if(title.length()==1) throw new Exception("titlul trebuie sa aiba minim doua caractere!");
+        if(timeStart.equals("")) throw new Exception("introduceti timpul de start!");
+        if(timeEnd.equals("")&&checkBoxRepeatedIsSelected) throw new Exception("introduceti timpul de final!");
 
-        if(!txtFieldTimeStart.getText().matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul timpului de start nu este corect!");
-        if(!txtFieldTimeEnd.getText().matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeated.isSelected()) throw new Exception("formatul timpului de final nu este corect!");
+        if(!timeStart.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul timpului de start nu este corect!");
+        if(!timeEnd.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeatedIsSelected) throw new Exception("formatul timpului de final nu este corect!");
 
-        if(checkBoxRepeated.isSelected()&&fieldInterval.getText().equals("")) throw new Exception("introduceti intervalul!");
-        if(checkBoxRepeated.isSelected()&&!fieldInterval.getText().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul intervalului nu este corect!");
+        if(checkBoxRepeatedIsSelected&&interval.equals("")) throw new Exception("introduceti intervalul!");
+        if(checkBoxRepeatedIsSelected&&!interval.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul intervalului nu este corect!");
 
 
-        Date startDateWithNoTime = dateService.getDateValueFromLocalDate(datePickerStart.getValue());//ONLY date!!without time
-        Date newStartDate = dateService.getDateMergedWithTime(txtFieldTimeStart.getText(), startDateWithNoTime);
-        if (checkBoxRepeated.isSelected()){
-            Date endDateWithNoTime = dateService.getDateValueFromLocalDate(datePickerEnd.getValue());
-            Date newEndDate = dateService.getDateMergedWithTime(txtFieldTimeEnd.getText(), endDateWithNoTime);
-            int newInterval = service.parseFromStringToSeconds(fieldInterval.getText());
+        Date startDateWithNoTime = getDateValueFromLocalDate(dateStart);//ONLY date!!without time
+        Date newStartDate = getDateMergedWithTime(timeStart, startDateWithNoTime);
+        if (checkBoxRepeatedIsSelected){
+            Date endDateWithNoTime = getDateValueFromLocalDate(dateEnd);
+            Date newEndDate = getDateMergedWithTime(timeEnd, endDateWithNoTime);
+            int newInterval = service.parseFromStringToSeconds(interval);
             if (newStartDate.after(newEndDate)) throw new IllegalArgumentException("Start date should be before end");
-            result = new Task(newTitle, newStartDate,newEndDate, newInterval);
+            result = new Task(title, newStartDate,newEndDate, newInterval);
         }
         else {
-            result = new Task(newTitle, newStartDate);
+            result = new Task(title, newStartDate);
         }
-        boolean isActive = checkBoxActive.isSelected();
+        boolean isActive = checkBoxActiveIsSelected;
         result.setActive(isActive);
         System.out.println(result);
         return result;
     }
 
+
+    public Date getDateValueFromLocalDate(LocalDate localDate)  {//for getting from DatePicker
+
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        return Date.from(instant);
+
+    }
+
+    public Date getDateMergedWithTime(String time, Date noTimeDate) {//to retrieve Date object from both DatePicker and time field
+        String[] units = time.split(":");
+        int hour = Integer.parseInt(units[0]);
+        int minute = Integer.parseInt(units[1]);
+        if (hour > 24 || minute > 60) throw new IllegalArgumentException("time unit exceeds bounds");
+        Calendar calendar = getInstance();
+        calendar.setTime(noTimeDate);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return calendar.getTime();
+    }
 
 }

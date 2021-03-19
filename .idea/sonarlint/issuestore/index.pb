@@ -27,3 +27,5 @@ f
 6src/main/java/tasks/controller/TaskInfoController.java,9\9\99b511d75f317e72fa25245b579d48cb3d074646
 X
 (src/main/java/tasks/services/TaskIO.java,2\6\26c7ae39591499fab3685c25bb4834dc2fc7cf24
+i
+9src/test/java/tasks/controller/NewEditControllerTest.java,3\7\37c5227067038b24989aac026b3d5deb3328aa53
