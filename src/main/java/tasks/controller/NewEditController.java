@@ -227,6 +227,7 @@ public class NewEditController {
         Task result;
         if(title.equals("")) throw new Exception("introduceti titlul!");
         if(title.length()==1) throw new Exception("titlul trebuie sa aiba minim doua caractere!");
+        if(title.length()>60) throw new Exception("titlul trebuie sa aiba maxim 60 de caractere!");
         if(timeStart.equals("")) throw new Exception("introduceti timpul de start!");
         if(timeEnd.equals("")&&checkBoxRepeatedIsSelected) throw new Exception("introduceti timpul de final!");
 
