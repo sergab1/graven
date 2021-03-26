@@ -11,9 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import tasks.model.Task;
-import tasks.services.DateService;
-import tasks.services.TaskIO;
-import tasks.services.TasksService;
+import tasks.services.*;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -223,20 +221,9 @@ public class NewEditController {
         return result;
     }
 
-    public Task createTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws Exception {
+    public Task createTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws MyException {
         Task result;
-        if(title.equals("")) throw new Exception("introduceti titlul!");
-        if(title.length()==1) throw new Exception("titlul trebuie sa aiba minim doua caractere!");
-        if(title.length()>60) throw new Exception("titlul trebuie sa aiba maxim 60 de caractere!");
-        if(timeStart.equals("")) throw new Exception("introduceti timpul de start!");
-        if(timeEnd.equals("")&&checkBoxRepeatedIsSelected) throw new Exception("introduceti timpul de final!");
-
-        if(!timeStart.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul timpului de start nu este corect!");
-        if(!timeEnd.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeatedIsSelected) throw new Exception("formatul timpului de final nu este corect!");
-
-        if(checkBoxRepeatedIsSelected&&interval.equals("")) throw new Exception("introduceti intervalul!");
-        if(checkBoxRepeatedIsSelected&&!interval.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new Exception("formatul intervalului nu este corect!");
-
+        validateTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
 
         Date startDateWithNoTime = getDateValueFromLocalDate(dateStart);//ONLY date!!without time
         Date newStartDate = getDateMergedWithTime(timeStart, startDateWithNoTime);
@@ -274,6 +261,22 @@ public class NewEditController {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
         return calendar.getTime();
+    }
+
+    public void validateTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws MyException {
+        if(title.equals("")) throw new MyException(Exceptions.noTitle.toString());
+        if(title.length()==1) throw new MyException(Exceptions.titleMin2.toString());
+        if(title.length()>60) throw new MyException(Exceptions.titleMax60.toString());
+        if(timeStart.equals("")) throw new MyException(Exceptions.noStartTime.toString());
+        if(timeEnd.equals("")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.noEndTime.toString());
+
+        if(!timeStart.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.startTimeFormatBad.toString());
+        if(!timeEnd.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.endTimeFormatBad.toString());
+
+        if(checkBoxRepeatedIsSelected&&interval.equals("")) throw new MyException(Exceptions.noInterval.toString());
+        if(checkBoxRepeatedIsSelected&&!interval.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.intervalFormatBad.toString());
+
+
     }
 
 }
