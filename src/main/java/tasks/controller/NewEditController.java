@@ -184,8 +184,20 @@ public class NewEditController {
             String timeStart=txtFieldTimeStart.getText();
             String timeEnd=txtFieldTimeEnd.getText();
             String interval=fieldInterval.getText();
-            LocalDate dateStart=datePickerStart.getValue();
-            LocalDate dateEnd=datePickerStart.getValue();
+
+
+            int dayStart=datePickerStart.getValue().getDayOfMonth();
+            int monthStart=datePickerStart.getValue().getMonthValue();
+            int yearStart=datePickerStart.getValue().getYear();
+            Calendar calendar=Calendar.getInstance();
+            calendar.set(yearStart,monthStart,dayStart);
+            Date dateStart=calendar.getTime();
+
+            int dayEnd=datePickerEnd.getValue().getDayOfMonth();
+            int monthEnd=datePickerEnd.getValue().getMonthValue();
+            int yearEnd=datePickerEnd.getValue().getYear();
+            calendar.set(yearEnd,monthEnd,dayEnd);
+            Date dateEnd=calendar.getTime();
 
             result = makeTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
         }
@@ -212,7 +224,7 @@ public class NewEditController {
     }
 
 
-    public Task makeTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws Exception {
+    public Task makeTask(String title,String timeStart,String timeEnd,String interval,Date dateStart,Date dateEnd) throws Exception {
         if (checkBoxRepeated.isSelected())
             checkBoxRepeatedIsSelected=true;
         if(checkBoxActive.isSelected())
@@ -221,16 +233,16 @@ public class NewEditController {
         return result;
     }
 
-    public Task createTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws MyException {
+    public Task createTask(String title,String timeStart,String timeEnd,String interval,Date dateStart,Date dateEnd) throws MyException {
         Task result;
         validateTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
 
-        Date startDateWithNoTime = getDateValueFromLocalDate(dateStart);//ONLY date!!without time
+        Date startDateWithNoTime = dateStart;//ONLY date!!without time
         Date newStartDate = getDateMergedWithTime(timeStart, startDateWithNoTime);
         if (checkBoxRepeatedIsSelected){
-            Date endDateWithNoTime = getDateValueFromLocalDate(dateEnd);
+            Date endDateWithNoTime = dateEnd;
             Date newEndDate = getDateMergedWithTime(timeEnd, endDateWithNoTime);
-            int newInterval = service.parseFromStringToSeconds(interval);
+            int newInterval = parseFromStringToSeconds(interval);
             if (newStartDate.after(newEndDate)) throw new IllegalArgumentException("Start date should be before end");
             result = new Task(title, newStartDate,newEndDate, newInterval);
         }
@@ -263,20 +275,28 @@ public class NewEditController {
         return calendar.getTime();
     }
 
-    public void validateTask(String title,String timeStart,String timeEnd,String interval,LocalDate dateStart,LocalDate dateEnd) throws MyException {
-        if(title.equals("")) throw new MyException(Exceptions.noTitle.toString());
-        if(title.length()==1) throw new MyException(Exceptions.titleMin2.toString());
-        if(title.length()>60) throw new MyException(Exceptions.titleMax60.toString());
-        if(timeStart.equals("")) throw new MyException(Exceptions.noStartTime.toString());
-        if(timeEnd.equals("")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.noEndTime.toString());
+    public void validateTask(String title,String timeStart,String timeEnd,String interval,Date dateStart,Date dateEnd) throws MyException {
+        if(title.equals("")) throw new MyException(Exceptions.noTitle.label);
+        if(title.length()==1) throw new MyException(Exceptions.titleMin2.label);
+        if(title.length()>60) throw new MyException(Exceptions.titleMax60.label);
+        if(timeStart.equals("")) throw new MyException(Exceptions.noStartTime.label);
+        if(timeEnd.equals("")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.noEndTime.label);
 
-        if(!timeStart.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.startTimeFormatBad.toString());
-        if(!timeEnd.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.endTimeFormatBad.toString());
+        if(!timeStart.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.startTimeFormatBad.label);
+        if(!timeEnd.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.endTimeFormatBad.label);
 
-        if(checkBoxRepeatedIsSelected&&interval.equals("")) throw new MyException(Exceptions.noInterval.toString());
-        if(checkBoxRepeatedIsSelected&&!interval.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.intervalFormatBad.toString());
+        if(checkBoxRepeatedIsSelected&&interval.equals("")) throw new MyException(Exceptions.noInterval.label);
+        if(checkBoxRepeatedIsSelected&&!interval.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.intervalFormatBad.label);
 
 
+    }
+
+    public int parseFromStringToSeconds(String stringTime){//hh:MM
+        String[] units = stringTime.split(":");
+        int hours = Integer.parseInt(units[0]);
+        int minutes = Integer.parseInt(units[1]);
+        int result = (hours * DateService.MINUTES_IN_HOUR + minutes) * DateService.SECONDS_IN_MINUTE;
+        return result;
     }
 
 }

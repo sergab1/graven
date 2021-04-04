@@ -14,9 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import tasks.model.Task;
-import tasks.services.DateService;
-import tasks.services.TaskIO;
-import tasks.services.TasksService;
+import tasks.services.*;
 import tasks.view.Main;
 
 import java.io.IOException;
@@ -156,10 +154,18 @@ public class Controller {
             tasks.setItems(observableTasks);
             updateCountLabel(observableTasks);
         }catch (Exception e){
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Input not valid");
-            errorAlert.setContentText("Introduceti datele calendaristice si orele!");
-            errorAlert.showAndWait();
+            if(e.getClass()==MyException.class){
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Error");
+                errorAlert.setContentText(e.getMessage());
+                errorAlert.showAndWait();
+            }
+            else {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Input not valid");
+                errorAlert.setContentText("Introduceti datele calendaristice si orele!");
+                errorAlert.showAndWait();
+            }
         }
     }
     private Date getDateFromFilterField(LocalDate localDate, String time) {

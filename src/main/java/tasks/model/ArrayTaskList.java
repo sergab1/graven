@@ -10,7 +10,7 @@ import java.util.*;
 public class ArrayTaskList extends TaskList{
 
     private Task[] tasks;
-    private int numberOfTasks;
+    public int numberOfTasks;
     private int currentCapacity;
     private static final Logger log = Logger.getLogger(ArrayTaskList.class.getName());
     private class ArrayTaskListIterator implements Iterator<Task> {
@@ -146,6 +146,13 @@ public class ArrayTaskList extends TaskList{
         return tasks;
 
     }
+
+    public void clear(){
+        tasks=new Task[]{};
+        this.tasks = new Task[currentCapacity];
+    }
+
+
 
 
 }

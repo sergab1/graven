@@ -6,14 +6,17 @@ import tasks.model.ArrayTaskList;
 import tasks.model.Task;
 import tasks.model.TasksOperations;
 
+import java.io.*;
 import java.util.Date;
 
 public class TasksService {
 
     private ArrayTaskList tasks;
+    private File file;
 
-    public TasksService(ArrayTaskList tasks){
+    public TasksService(ArrayTaskList tasks,File file) {
         this.tasks = tasks;
+        this.file = file;
     }
 
 
@@ -46,8 +49,10 @@ public class TasksService {
         return result;
     }
 
-    public Iterable<Task> filterTasks(Date start, Date end){
-        TasksOperations tasksOps = new TasksOperations(getObservableList());
+    public Iterable<Task> filterTasks(Date start, Date end) throws IOException, MyException {
+        tasks=new ArrayTaskList();
+        TaskIO.readBinary(tasks, file);
+        TasksOperations tasksOps = new TasksOperations(tasks);
         Iterable<Task> filtered = tasksOps.incoming(start,end);
        // Iterable<Task> filtered = tasks.incoming(start, end);
 

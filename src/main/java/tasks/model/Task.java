@@ -63,6 +63,7 @@ public class Task implements Serializable, Cloneable {
         this.active = active;
     }
 
+
     public Date getTime() {
         return time;
     }

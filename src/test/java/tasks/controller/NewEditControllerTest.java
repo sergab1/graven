@@ -8,17 +8,27 @@ import tasks.services.MyException;
 
 
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 class NewEditControllerTest {
     private NewEditController newEditController;
-    private LocalDate dateStart;
-    private LocalDate dateEnd;
+    private Date dateStart;
+    private Date dateEnd;
 
     @BeforeEach
     void initialize() {
         newEditController = new NewEditController();
-        dateStart = LocalDate.of(2021, 11, 20);
-        dateEnd = LocalDate.of(2021, 11, 22);
+        Date date = new GregorianCalendar(2021, 11, 20).getTime();
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 02);
+        calendar.set(Calendar.MINUTE, 00);
+        dateStart=calendar.getTime();
+
+        calendar.set(2021,11,22);
+        dateEnd=calendar.getTime();
     }
 
     //ECP
@@ -34,7 +44,7 @@ class NewEditControllerTest {
 
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()== Exceptions.noTitle.toString());
+            assert(e.getMessage()== Exceptions.noTitle.label);
         }
 
     }
@@ -49,7 +59,7 @@ class NewEditControllerTest {
         assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.titleMin2.toString());
+            assert(e.getMessage()==Exceptions.titleMin2.label);
         }
 
     }
@@ -85,7 +95,7 @@ class NewEditControllerTest {
         assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.titleMax60.toString());
+            assert(e.getMessage()==Exceptions.titleMax60.label);
         }
 
     }
@@ -103,7 +113,7 @@ class NewEditControllerTest {
         assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.noStartTime.toString());
+            assert(e.getMessage()==Exceptions.noStartTime.label);
         }
 
     }
@@ -118,7 +128,7 @@ class NewEditControllerTest {
             assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.startTimeFormatBad.toString());
+            assert(e.getMessage()==Exceptions.startTimeFormatBad.label);
         }
     }
 
@@ -132,7 +142,7 @@ class NewEditControllerTest {
             assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.startTimeFormatBad.toString());
+            assert(e.getMessage()==Exceptions.startTimeFormatBad.label);
         }
     }
 
@@ -170,7 +180,7 @@ class NewEditControllerTest {
             assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.startTimeFormatBad.toString());
+            assert(e.getMessage()==Exceptions.startTimeFormatBad.label);
         }
     }
 
@@ -217,7 +227,7 @@ class NewEditControllerTest {
             assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.startTimeFormatBad.toString());
+            assert(e.getMessage()==Exceptions.startTimeFormatBad.label);
         }
     }
 
@@ -231,7 +241,7 @@ class NewEditControllerTest {
             assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.startTimeFormatBad.toString());
+            assert(e.getMessage()==Exceptions.startTimeFormatBad.label);
         }
     }
 
@@ -245,7 +255,7 @@ class NewEditControllerTest {
             assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.startTimeFormatBad.toString());
+            assert(e.getMessage()==Exceptions.startTimeFormatBad.label);
         }
     }
 
@@ -261,7 +271,7 @@ class NewEditControllerTest {
         assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.titleMin2.toString());
+            assert(e.getMessage()==Exceptions.titleMin2.label);
         }
     }
 
@@ -308,7 +318,7 @@ class NewEditControllerTest {
         assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()==Exceptions.titleMax60.toString());
+            assert(e.getMessage()==Exceptions.titleMax60.label);
         }
     }
 
@@ -324,7 +334,7 @@ class NewEditControllerTest {
             assert(false);
         }catch (Exception e){
             assert e.getClass()==MyException.class;
-            assert(e.getMessage()=="formatul intervalului nu este corect!");
+            assert(e.getMessage()==Exceptions.startTimeFormatBad.label);
         }
     }
 }

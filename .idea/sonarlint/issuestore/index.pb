@@ -33,3 +33,5 @@ i
 -src/main/java/tasks/services/MyException.java,e\7\e7e62a33e1afa9935cf1fa31021fa00f8b9b50fb
 \
 ,src/main/java/tasks/services/Exceptions.java,2\7\2714f7907085339b4d8b02b81817b53c4bbc6eb6
+b
+2src/test/java/tasks/model/TasksOperationsTest.java,2\5\256f630053d25ab19bee195a49b509c868810e3d

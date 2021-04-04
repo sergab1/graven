@@ -29,7 +29,7 @@ public class Main extends Application {
     private static ClassLoader classLoader = Main.class.getClassLoader();
     public static File savedTasksFile = new File(classLoader.getResource("data/tasks.txt").getFile());
 
-    private TasksService service = new TasksService(savedTasksList);//savedTasksList);
+    private TasksService service = new TasksService(savedTasksList,savedTasksFile);//savedTasksList);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -44,7 +44,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = loader.load();//loader.load(this.getClass().getResource("/fxml/main.fxml"));
             Controller ctrl= loader.getController();
-            service = new TasksService(savedTasksList);
+            service = new TasksService(savedTasksList,savedTasksFile);
 
             ctrl.setService(service);
             primaryStage.setTitle("Task Manager");

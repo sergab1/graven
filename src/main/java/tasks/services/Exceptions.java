@@ -9,7 +9,9 @@ public enum Exceptions {
     startTimeFormatBad("formatul timpului de start nu este corect!"),
     endTimeFormatBad("formatul timpului de final nu este corect!"),
     noInterval("introduceti intervalul!"),
-    intervalFormatBad("formatul intervalului nu este corect!");
+    intervalFormatBad("formatul intervalului nu este corect!"),
+    noTasks("nu exista task-uri in acest interval!"),
+    startAfterEnd("timpul de start trebuie sa fie inaintea timpului de final!");
 
 
     public final String label;
