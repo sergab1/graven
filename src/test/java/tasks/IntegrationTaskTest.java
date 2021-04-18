@@ -51,7 +51,7 @@ class IntegrationTaskTest {
 
     @Tag("valid")
     @Test
-    void integrationRepositoryAdd() throws MyException {
+    void integrationTaskAdd() throws MyException {
         Task t=new Task("abc",dateStart);
 
         tasksService.addTask(t);
@@ -61,7 +61,7 @@ class IntegrationTaskTest {
 
     @Tag("invalid")
     @Test
-    void integrationRepositoryAddExisting()  {
+    void integrationTaskAddExisting()  {
         try {
             Task t=new Task("abc",dateStart);
 

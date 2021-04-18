@@ -4,10 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import tasks.TasksRepository;
 import tasks.controller.NewEditController;
 import tasks.services.Exceptions;
 import tasks.services.MyException;
+import tasks.services.TasksService;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -19,11 +22,15 @@ class TasksOperationsTest {
     private Date dateStart;
     private Date dateEnd;
     private TasksOperations tasksOperations;
-    public ArrayTaskList tasks=new ArrayTaskList();
+    private ArrayTaskList savedTasksList;
+    public static File savedTasksFile = new File("data/tasks2.txt");
+    private TasksService tasksService;
 
     @BeforeEach
     void initialize()  {
-        newEditController = new NewEditController();
+        savedTasksList = new ArrayTaskList();
+        TasksRepository repo=new TasksRepository(savedTasksList);
+        tasksService=new TasksService(repo,savedTasksFile);
         Date date = new GregorianCalendar(2021, 11, 20).getTime();
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(date);
@@ -39,10 +46,9 @@ class TasksOperationsTest {
     @Tag("valid")
     @Test
     void incomingTestActiveNotRepeated() throws Exception {
-        Task newTask=newEditController.makeTask("abm","08:00","02:00","1",dateStart,dateEnd);
-        newTask.setActive(true);
-        tasks.add(newTask);
-        tasksOperations=new TasksOperations(tasks);
+        Task newTask=tasksService.createTask("abm","08:00","02:00","1",dateStart,dateEnd,false,true);
+        savedTasksList.add(newTask);
+        tasksOperations=new TasksOperations(savedTasksList);
         Iterable<Task> newTasks= tasksOperations.incoming(dateStart,dateEnd);
         Iterator<Task> it=newTasks.iterator();
         Task t=it.next();
@@ -56,11 +62,9 @@ class TasksOperationsTest {
     @Tag("valid")
     @Test
     void incomingTestActiveRepeated_startBeforeTimeStart() throws Exception {
-        newEditController.checkBoxRepeatedIsSelected=true;
-        Task newTask2=newEditController.makeTask("abm2","05:00","02:00","00:10",dateStart,dateEnd);
-        newTask2.setActive(true);
-        tasks.add(newTask2);
-        tasksOperations=new TasksOperations(tasks);
+        Task newTask2=tasksService.createTask("abm2","05:00","02:00","00:10",dateStart,dateEnd,true,true);
+        savedTasksList.add(newTask2);
+        tasksOperations=new TasksOperations(savedTasksList);
         Iterable<Task> newTasks= tasksOperations.incoming(dateStart,dateEnd);
         Iterator<Task> it=newTasks.iterator();
         Task t=it.next();
@@ -73,11 +77,9 @@ class TasksOperationsTest {
     @Tag("valid")
     @Test
     void incomingTestActiveRepeated_startAfterTimeStart_startEqualsTimeAfter() throws Exception {
-        newEditController.checkBoxRepeatedIsSelected=true;
-        Task newTask3=newEditController.makeTask("abm3","02:00","03:00","00:10",dateStart,dateEnd);
-        newTask3.setActive(true);
-        tasks.add(newTask3);
-        tasksOperations=new TasksOperations(tasks);
+        Task newTask3=tasksService.createTask("abm3","02:00","03:00","00:10",dateStart,dateEnd,true,true);
+        savedTasksList.add(newTask3);
+        tasksOperations=new TasksOperations(savedTasksList);
         Iterable<Task> newTasks= tasksOperations.incoming(dateStart,dateEnd);
         Iterator<Task> it=newTasks.iterator();
         Task t=it.next();
@@ -90,11 +92,9 @@ class TasksOperationsTest {
     @Tag("valid")
     @Test
     void incomingTestActiveRepeated_startAfterTimeStart_startBetweenTimeBeforeTimeAfter() throws Exception {
-        newEditController.checkBoxRepeatedIsSelected=true;
-        Task newTask4=newEditController.makeTask("abm4","00:01","02:00","00:10",dateStart,dateEnd);
-        newTask4.setActive(true);
-        tasks.add(newTask4);
-        tasksOperations=new TasksOperations(tasks);
+        Task newTask4=tasksService.createTask("abm4","00:01","02:00","00:10",dateStart,dateEnd,true,true);
+        savedTasksList.add(newTask4);
+        tasksOperations=new TasksOperations(savedTasksList);
         Iterable<Task> newTasks= tasksOperations.incoming(dateStart,dateEnd);
         Iterator<Task> it=newTasks.iterator();
         Task t=it.next();
@@ -107,9 +107,9 @@ class TasksOperationsTest {
     @Tag("invalid")
     @Test
     void incomingTestStartAfterEndTime() throws Exception {
-        Task newTask5=newEditController.makeTask("abm5","00:00","01:00","1",dateStart,dateEnd);
-        tasks.add(newTask5);
-        tasksOperations=new TasksOperations(tasks);
+        Task newTask5=tasksService.createTask("abm5","00:00","01:00","1",dateStart,dateEnd,false,false);
+        savedTasksList.add(newTask5);
+        tasksOperations=new TasksOperations(savedTasksList);
 
         try{
         tasksOperations.incoming(dateStart,dateEnd);}
@@ -133,9 +133,9 @@ class TasksOperationsTest {
         calendar.set(2020,11,22);
         Date newDateEnd=calendar.getTime();
 
-        Task newTask6=newEditController.makeTask("abm6","00:00","01:00","1",dateStart,dateEnd);
-        tasks.add(newTask6);
-        tasksOperations=new TasksOperations(tasks);
+        Task newTask6=tasksService.createTask("abm6","00:00","01:00","1",dateStart,dateEnd,false,false);
+        savedTasksList.add(newTask6);
+        tasksOperations=new TasksOperations(savedTasksList);
 
         try{
         tasksOperations.incoming(newDateStart,newDateEnd);}
@@ -149,9 +149,9 @@ class TasksOperationsTest {
     @Tag("invalid")
     @Test
     void incomingTestStartAfterEnd() throws Exception {
-        Task newTask7=newEditController.makeTask("abm7","00:00","01:00","1",dateStart,dateEnd);
-        tasks.add(newTask7);
-        tasksOperations=new TasksOperations(tasks);
+        Task newTask7=tasksService.createTask("abm7","00:00","01:00","1",dateStart,dateEnd,false,false);
+        savedTasksList.add(newTask7);
+        tasksOperations=new TasksOperations(savedTasksList);
 
         try{
             tasksOperations.incoming(dateEnd,dateStart);}
