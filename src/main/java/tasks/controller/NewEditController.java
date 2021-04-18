@@ -103,6 +103,7 @@ public class NewEditController {
     public void initNewWindow(String title){
         currentStage.setTitle(title);
         datePickerStart.setValue(LocalDate.now());
+        datePickerEnd.setValue(LocalDate.now());
         txtFieldTimeStart.setText(DEFAULT_START_TIME);
     }
 
@@ -111,6 +112,7 @@ public class NewEditController {
         currentStage.setTitle(title);
         fieldTitle.setText(currentTask.getTitle());
         datePickerStart.setValue(dateService.getLocalDateValueFromDate(currentTask.getStartTime()));
+        datePickerEnd.setValue(dateService.getLocalDateValueFromDate(currentTask.getStartTime()));
         txtFieldTimeStart.setText(dateService.getTimeOfTheDayFromDate(currentTask.getStartTime()));
 
         if (currentTask.isRepeated()){
@@ -125,6 +127,7 @@ public class NewEditController {
 
         }}
         catch (Exception e){
+
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText("Nu ati selectat niciun task");
@@ -152,14 +155,26 @@ public class NewEditController {
     }
 
     @FXML
-    public void saveChanges(){
+    public void saveChanges() throws MyException {
+
         Task collectedFieldsTask = collectFieldsData();
 
         if (incorrectInputMade) return;
 
         if (currentTask == null){//no task was chosen -> add button was pressed
-            tasksList.add(collectedFieldsTask);
-        }
+            try{
+                service.addTask(collectedFieldsTask);
+                tasksList.add(collectedFieldsTask);
+            }
+            catch (Exception e) {
+
+                incorrectInputMade = true;
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Input not valid");
+                errorAlert.setContentText(e.getMessage());
+                errorAlert.showAndWait();
+            }
+            }
         else {
             for (int i = 0; i < tasksList.size(); i++){
                 if (currentTask.equals(tasksList.get(i))){
@@ -168,7 +183,6 @@ public class NewEditController {
             }
             currentTask = null;
         }
-        TaskIO.rewriteFile(tasksList);
         Controller.editNewStage.close();
     }
     @FXML
@@ -202,11 +216,13 @@ public class NewEditController {
             result = makeTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
         }
         catch (Exception e){
+
             incorrectInputMade = true;
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText(e.getMessage());
             errorAlert.showAndWait();
+
             /*
             try {
                 Stage stage = new Stage();
@@ -229,31 +245,10 @@ public class NewEditController {
             checkBoxRepeatedIsSelected=true;
         if(checkBoxActive.isSelected())
             checkBoxActiveIsSelected=true;
-        Task result=createTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
+        Task result=service.createTask(title,timeStart,timeEnd,interval,dateStart,dateEnd,checkBoxRepeatedIsSelected,checkBoxActiveIsSelected);
         return result;
     }
 
-    public Task createTask(String title,String timeStart,String timeEnd,String interval,Date dateStart,Date dateEnd) throws MyException {
-        Task result;
-        validateTask(title,timeStart,timeEnd,interval,dateStart,dateEnd);
-
-        Date startDateWithNoTime = dateStart;//ONLY date!!without time
-        Date newStartDate = getDateMergedWithTime(timeStart, startDateWithNoTime);
-        if (checkBoxRepeatedIsSelected){
-            Date endDateWithNoTime = dateEnd;
-            Date newEndDate = getDateMergedWithTime(timeEnd, endDateWithNoTime);
-            int newInterval = parseFromStringToSeconds(interval);
-            if (newStartDate.after(newEndDate)) throw new IllegalArgumentException("Start date should be before end");
-            result = new Task(title, newStartDate,newEndDate, newInterval);
-        }
-        else {
-            result = new Task(title, newStartDate);
-        }
-        boolean isActive = checkBoxActiveIsSelected;
-        result.setActive(isActive);
-        System.out.println(result);
-        return result;
-    }
 
 
     public Date getDateValueFromLocalDate(LocalDate localDate)  {//for getting from DatePicker
@@ -263,33 +258,6 @@ public class NewEditController {
 
     }
 
-    public Date getDateMergedWithTime(String time, Date noTimeDate) {//to retrieve Date object from both DatePicker and time field
-        String[] units = time.split(":");
-        int hour = Integer.parseInt(units[0]);
-        int minute = Integer.parseInt(units[1]);
-        if (hour > 24 || minute > 60) throw new IllegalArgumentException("time unit exceeds bounds");
-        Calendar calendar = getInstance();
-        calendar.setTime(noTimeDate);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        return calendar.getTime();
-    }
-
-    public void validateTask(String title,String timeStart,String timeEnd,String interval,Date dateStart,Date dateEnd) throws MyException {
-        if(title.equals("")) throw new MyException(Exceptions.noTitle.label);
-        if(title.length()==1) throw new MyException(Exceptions.titleMin2.label);
-        if(title.length()>60) throw new MyException(Exceptions.titleMax60.label);
-        if(timeStart.equals("")) throw new MyException(Exceptions.noStartTime.label);
-        if(timeEnd.equals("")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.noEndTime.label);
-
-        if(!timeStart.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.startTimeFormatBad.label);
-        if(!timeEnd.matches( "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")&&checkBoxRepeatedIsSelected) throw new MyException(Exceptions.endTimeFormatBad.label);
-
-        if(checkBoxRepeatedIsSelected&&interval.equals("")) throw new MyException(Exceptions.noInterval.label);
-        if(checkBoxRepeatedIsSelected&&!interval.matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")) throw new MyException(Exceptions.intervalFormatBad.label);
-
-
-    }
 
     public int parseFromStringToSeconds(String stringTime){//hh:MM
         String[] units = stringTime.split(":");

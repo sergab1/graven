@@ -2,14 +2,17 @@ package tasks.view;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+import tasks.TasksRepository;
 import tasks.controller.Controller;
 import tasks.controller.Notificator;
 import tasks.model.ArrayTaskList;
+import tasks.model.Task;
 import tasks.services.TaskIO;
 import tasks.services.TasksService;
 
@@ -29,7 +32,10 @@ public class Main extends Application {
     private static ClassLoader classLoader = Main.class.getClassLoader();
     public static File savedTasksFile = new File(classLoader.getResource("data/tasks.txt").getFile());
 
-    private TasksService service = new TasksService(savedTasksList,savedTasksFile);//savedTasksList);
+
+
+    private TasksRepository repo=new TasksRepository(savedTasksList);
+    private TasksService service = new TasksService(repo,savedTasksFile);//savedTasksList);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -44,7 +50,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = loader.load();//loader.load(this.getClass().getResource("/fxml/main.fxml"));
             Controller ctrl= loader.getController();
-            service = new TasksService(savedTasksList,savedTasksFile);
+            service = new TasksService(repo,savedTasksFile);
 
             ctrl.setService(service);
             primaryStage.setTitle("Task Manager");

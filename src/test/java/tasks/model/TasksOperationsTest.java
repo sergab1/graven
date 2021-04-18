@@ -38,8 +38,8 @@ class TasksOperationsTest {
 
     @Tag("valid")
     @Test
-    void incomingTestActiveNotRepeated() throws MyException {
-        Task newTask=newEditController.createTask("abm","08:00","02:00","1",dateStart,dateEnd);
+    void incomingTestActiveNotRepeated() throws Exception {
+        Task newTask=newEditController.makeTask("abm","08:00","02:00","1",dateStart,dateEnd);
         newTask.setActive(true);
         tasks.add(newTask);
         tasksOperations=new TasksOperations(tasks);
@@ -55,9 +55,9 @@ class TasksOperationsTest {
 
     @Tag("valid")
     @Test
-    void incomingTestActiveRepeated_startBeforeTimeStart() throws MyException {
+    void incomingTestActiveRepeated_startBeforeTimeStart() throws Exception {
         newEditController.checkBoxRepeatedIsSelected=true;
-        Task newTask2=newEditController.createTask("abm2","05:00","02:00","00:10",dateStart,dateEnd);
+        Task newTask2=newEditController.makeTask("abm2","05:00","02:00","00:10",dateStart,dateEnd);
         newTask2.setActive(true);
         tasks.add(newTask2);
         tasksOperations=new TasksOperations(tasks);
@@ -72,9 +72,9 @@ class TasksOperationsTest {
 
     @Tag("valid")
     @Test
-    void incomingTestActiveRepeated_startAfterTimeStart_startEqualsTimeAfter() throws MyException {
+    void incomingTestActiveRepeated_startAfterTimeStart_startEqualsTimeAfter() throws Exception {
         newEditController.checkBoxRepeatedIsSelected=true;
-        Task newTask3=newEditController.createTask("abm3","02:00","03:00","00:10",dateStart,dateEnd);
+        Task newTask3=newEditController.makeTask("abm3","02:00","03:00","00:10",dateStart,dateEnd);
         newTask3.setActive(true);
         tasks.add(newTask3);
         tasksOperations=new TasksOperations(tasks);
@@ -89,9 +89,9 @@ class TasksOperationsTest {
 
     @Tag("valid")
     @Test
-    void incomingTestActiveRepeated_startAfterTimeStart_startBetweenTimeBeforeTimeAfter() throws MyException {
+    void incomingTestActiveRepeated_startAfterTimeStart_startBetweenTimeBeforeTimeAfter() throws Exception {
         newEditController.checkBoxRepeatedIsSelected=true;
-        Task newTask4=newEditController.createTask("abm4","00:01","02:00","00:10",dateStart,dateEnd);
+        Task newTask4=newEditController.makeTask("abm4","00:01","02:00","00:10",dateStart,dateEnd);
         newTask4.setActive(true);
         tasks.add(newTask4);
         tasksOperations=new TasksOperations(tasks);
@@ -106,8 +106,8 @@ class TasksOperationsTest {
 
     @Tag("invalid")
     @Test
-    void incomingTestStartAfterEndTime() throws MyException {
-        Task newTask5=newEditController.createTask("abm5","00:00","01:00","1",dateStart,dateEnd);
+    void incomingTestStartAfterEndTime() throws Exception {
+        Task newTask5=newEditController.makeTask("abm5","00:00","01:00","1",dateStart,dateEnd);
         tasks.add(newTask5);
         tasksOperations=new TasksOperations(tasks);
 
@@ -121,7 +121,7 @@ class TasksOperationsTest {
 
     @Tag("invalid")
     @Test
-    void incomingTestNoTasks() throws MyException {
+    void incomingTestNoTasks() throws Exception {
 
         Date date = new GregorianCalendar(2020, 11, 20).getTime();
         Calendar calendar=Calendar.getInstance();
@@ -133,7 +133,7 @@ class TasksOperationsTest {
         calendar.set(2020,11,22);
         Date newDateEnd=calendar.getTime();
 
-        Task newTask6=newEditController.createTask("abm6","00:00","01:00","1",dateStart,dateEnd);
+        Task newTask6=newEditController.makeTask("abm6","00:00","01:00","1",dateStart,dateEnd);
         tasks.add(newTask6);
         tasksOperations=new TasksOperations(tasks);
 
@@ -148,8 +148,8 @@ class TasksOperationsTest {
 
     @Tag("invalid")
     @Test
-    void incomingTestStartAfterEnd() throws MyException {
-        Task newTask7=newEditController.createTask("abm7","00:00","01:00","1",dateStart,dateEnd);
+    void incomingTestStartAfterEnd() throws Exception {
+        Task newTask7=newEditController.makeTask("abm7","00:00","01:00","1",dateStart,dateEnd);
         tasks.add(newTask7);
         tasksOperations=new TasksOperations(tasks);
 

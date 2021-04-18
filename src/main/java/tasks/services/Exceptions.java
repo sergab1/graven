@@ -11,7 +11,8 @@ public enum Exceptions {
     noInterval("introduceti intervalul!"),
     intervalFormatBad("formatul intervalului nu este corect!"),
     noTasks("nu exista task-uri in acest interval!"),
-    startAfterEnd("timpul de start trebuie sa fie inaintea timpului de final!");
+    startAfterEnd("timpul de start trebuie sa fie inaintea timpului de final!"),
+    existingTask("exista un Task cu acest nume!");
 
 
     public final String label;
