@@ -16,7 +16,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-@TestMethodOrder(MethodOrderer.Random.class)
 
 class NewEditControllerTest {
     private NewEditController newEditController;
